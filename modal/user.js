@@ -47,6 +47,7 @@ const User = mongoose.model('users',userSchema)
         email : Joi.string().min(5).max(255).required().email(),
         password : Joi.string().min(5).max(255).required(),
         phone : Joi.string().min(5).max(255).required(),
+        role : Joi.string().min(5).max(255).required(),
     })
 
 

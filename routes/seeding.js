@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router()
-const Country = require('../modal/country')
-const axios = require('axios')
 const apiKey = 'Bearer Wvl6SGaGPuqpi8hsxJFG01MjyWrMxzyrQ2M612LZ';
 const CountryService = require('./country-service');
 
