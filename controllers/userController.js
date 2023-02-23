@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt')
 const express = require('express')
 const router = express.Router()
 const {User, schema} = require('../modal/user')
-const auth = require('../middleware/auth');
-const admin = require('../middleware/admin');
 
 
 exports.getUser = async(req,res) => {
@@ -26,12 +24,15 @@ exports.createUser = async (req,res) => {
             email : req.body.email,
             role : req.body.role,
         })
+
         const salt = await bcrypt.genSalt(10)
-        user.password =  await bcrypt.hash(user.password,salt)    
+        user.password =  await bcrypt.hash(user.password,salt) 
+        // let hashPassword = user.password;
+        // console.log("HashPassword => " ,hashPassword);   
         await user.save()
 
     const token =  user.generateAuthToken();
- res.header('x-auth-token',token).json({
+ res.header('x-auth-token',token).json({    
         
             user: {
                 id: user._id,
@@ -49,3 +50,6 @@ exports.createUser = async (req,res) => {
         console.log(error.message);    
     }
 };
+
+// exports.hashPassword = hashPassword;
+//  module.exports = user;
