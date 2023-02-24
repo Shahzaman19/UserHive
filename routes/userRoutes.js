@@ -6,5 +6,7 @@ const userController = require('../controllers/userController')
 
 router.get('/', auth, admin , userController.getUser);
 router.post('/' , userController.createUser)
+router.post('/default_country' , userController.userCountry)
+
 
 module.exports = router;

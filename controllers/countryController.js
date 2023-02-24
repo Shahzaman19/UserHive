@@ -1,5 +1,9 @@
-const express = require('express')
 const Country = require('../modal/country')
+
+
+exports.currencyConversion = async (req,res) => {
+    
+}
 
 exports.getCountries = async (req,res) => {
     const country = await Country.find()
@@ -8,7 +12,7 @@ exports.getCountries = async (req,res) => {
 
 exports.createCountries = async (req,res) => {
     try {
-        const country = await new Country({
+        const country =  new Country({
             name : req.body.name,
             numericCode : req.body.numericCode,
             callingCode : req.body.callingCode,
@@ -16,7 +20,7 @@ exports.createCountries = async (req,res) => {
             symbol : req.body.symbol
         })
         await country.save()
-        res.send(country)
+        return res.send(country)
     } 
     catch (error) {
         console.log(error.message);    

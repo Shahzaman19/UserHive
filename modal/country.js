@@ -24,6 +24,20 @@ const countrySchema = new mongoose.Schema({
         type : String,
         maxlength : 255,
     },
+    amount : {
+        type : String,
+        maxlength : 255,
+    },
+    convert_to : {
+        type : String,
+        maxlength : 255,
+        default : 'Pkr'
+    },
+    convert_from  : {
+        type : String,
+        maxlength : 255,
+        default : 'Pkr'
+    },
 });
 
 const Country = mongoose.model('countries',countrySchema) 
