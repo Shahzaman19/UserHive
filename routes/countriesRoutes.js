@@ -6,6 +6,7 @@ const countryController = require('../controllers/countryController')
 
 router.get('/', auth , admin , countryController.getCountries);
 router.post('/', countryController.createCountries);
+router.post('/convert', countryController.currencyConversion);
 
 
 module.exports = router;

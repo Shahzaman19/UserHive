@@ -16,27 +16,27 @@ const countrySchema = new mongoose.Schema({
         type : String,
         maxlength : 255,
     },
+    currencies: {
+        type : Object,
+        maxlength : 255,
+    },
     latLng :{
-        type : String,
+        type : Object,
         maxlength : 255,
-    },
-    symbol : {
-        type : String,
-        maxlength : 255,
-    },
-    amount : {
+    }, 
+    amountToConvert : {
         type : String,
         maxlength : 255,
     },
     convert_to : {
         type : String,
         maxlength : 255,
-        default : 'Pkr'
+        // default : 'Pkr'
     },
     convert_from  : {
         type : String,
         maxlength : 255,
-        default : 'Pkr'
+        // default : 'Pkr'
     },
 });
 

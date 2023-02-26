@@ -16,13 +16,18 @@ class CountryService {
     async insertCountries(countries) {
         for (let [key, values] of Object.entries(countries)) {
             const country = new Country({
-                name: values.name,
+                name : values.name,
                 numericCode: values.numericCode,
                 callingCode: values.callingCode,
                 capital : values.capital,
-                // country : values.latLng[0]['country'],
-                currencies : values.currencies.name,
-        symbol: values.currencies[Object.keys(values.currencies)[0]].symbol
+                latLng : {
+                    country : values.latLng.country,
+                    capital : values.latLng.capital
+                },
+                currencies :{
+          symbol: values.currencies[Object.keys(values.currencies)[0]].symbol,
+          name: values.currencies[Object.keys(values.currencies)[0]].name
+                }
 
             });
             await country.save();
@@ -36,3 +41,15 @@ class CountryService {
 }
 
 module.exports = CountryService;
+
+
+// "latLng": {
+//     "country": [
+//         33,
+//         65
+//     ],
+//     "capital": [
+//         34.52,
+//         69.18
+//     ]
+// },

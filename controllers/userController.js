@@ -2,9 +2,6 @@ const bcrypt = require('bcrypt')
 const express = require('express')
 const { User, schema } = require('../modal/user')
 
-
-
-
 exports.userCountry = async (req, res) => {
     
     try {

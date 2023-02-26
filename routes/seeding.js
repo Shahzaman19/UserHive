@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const apiKey = 'Bearer Wvl6SGaGPuqpi8hsxJFG01MjyWrMxzyrQ2M612LZ';
+const apiKey = 'Bearer eZbCHO5E9c8R1QE52JTokiKi5SeGHJlZSUXlkjUp';
 const CountryService = require('./country-service');
 
  const countryService = new CountryService(apiKey);
