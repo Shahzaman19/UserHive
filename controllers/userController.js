@@ -1,22 +1,47 @@
 const bcrypt = require('bcrypt')
 const express = require('express')
 const { User, schema } = require('../modal/user')
+const Country = require('../modal/country')
 
 exports.userCountry = async (req, res) => {
     
+    console.log("zamzamzamzmaz");
     try {
-    const {userId} = req.query;
-    let user =  await User.findById({_id : userId})
-    if(!user) return res.send('UserId not found')
-    if(req.body.countryId){
-        user.country_Id = req.body.countryId
-        await user.save()
-    }
-    else{
-        user.country_Id = " Pakistan"
-        await user.save()
-    }
-    res.json(user)
+    // const {userId} = req.query;
+    // let user =  await User.findById({_id : userId})
+
+    // if(!user) return res.send('UserId not found')
+
+    // if(req.body.countryId){
+    //     user.country_Id = req.body.countryId
+    //     await user.save()
+    // }
+    // else{
+    //     user.country_Id = "Pakistan"
+    //     await user.save()
+    // }
+    // res.json(user)
+// -------------------------------------
+    // const {userId} = req.query;
+    // let user =  await User.findById({_id : userId})
+
+    // if(!user) return res.send('UserId not found')
+
+    // if(req.body.countryId){
+    //     user.country_Id = req.body.countryId
+    //     await user.save()
+    // }
+    // else{
+    //     const country = await Country.findOne({name: "Pakistan"})
+    //     if (country) {
+    //         user.country_Id = country._id
+    //         await user.save()
+    //     } else {
+    //         return res.send('Default country not found')
+    //     }
+    // }
+    // res.json(user)
+
 
     }
      catch (error)
@@ -44,7 +69,7 @@ exports.createUser = async (req, res) => {
             phone: req.body.phone,
             email: req.body.email,
             role: req.body.role,
-            // country_Id : req.body.country_Id
+            country_Id : req.body.country_Id
         })
 
         const salt = await bcrypt.genSalt(10)
@@ -60,7 +85,8 @@ exports.createUser = async (req, res) => {
                 password: user.password,
                 phone: user.phone,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                country_Id : user.country_Id
             },
         },
         );

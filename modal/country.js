@@ -25,13 +25,13 @@ const countrySchema = new mongoose.Schema({
         maxlength : 255,
     }, 
     amountToConvert : {
-        type : String,
+        type : Number,
         maxlength : 255,
     },
     convert_to : {
         type : String,
         maxlength : 255,
-        // default : 'Pkr'
+        default : 'PKR'
     },
     convert_from  : {
         type : String,

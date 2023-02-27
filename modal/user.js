@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     },
     country_Id : {
         type : String,
-        default : 'Pakistan'
+        // default : 'Pakistan'
     }
 
 });
