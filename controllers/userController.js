@@ -9,7 +9,6 @@ exports.userCountry = async (req, res) => {
     try {
     // const {userId} = req.query;
     // let user =  await User.findById({_id : userId})
-
     // if(!user) return res.send('UserId not found')
 
     // if(req.body.countryId){
@@ -22,25 +21,25 @@ exports.userCountry = async (req, res) => {
     // }
     // res.json(user)
 // -------------------------------------
-    // const {userId} = req.query;
-    // let user =  await User.findById({_id : userId})
+    const {userId} = req.query;
+    let user =  await User.findById({_id : userId})
 
-    // if(!user) return res.send('UserId not found')
+    if(!user) return res.send('UserId not found')
 
-    // if(req.body.countryId){
-    //     user.country_Id = req.body.countryId
-    //     await user.save()
-    // }
-    // else{
-    //     const country = await Country.findOne({name: "Pakistan"})
-    //     if (country) {
-    //         user.country_Id = country._id
-    //         await user.save()
-    //     } else {
-    //         return res.send('Default country not found')
-    //     }
-    // }
-    // res.json(user)
+    if(req.body.countryId){
+        user.country_Id = req.body.countryId
+        await user.save()
+    }
+    else{
+        const country = await Country.findOne({name: "Pakistan"})
+        if (country) {
+            user.country_Id = country._id
+            await user.save()
+        } else {
+            return res.send('Default country not found')
+        }
+    }
+    res.json(user)
 
 
     }
