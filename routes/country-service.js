@@ -41,15 +41,3 @@ class CountryService {
 }
 
 module.exports = CountryService;
-
-
-// "latLng": {
-//     "country": [
-//         33,
-//         65
-//     ],
-//     "capital": [
-//         34.52,
-//         69.18
-//     ]
-// },

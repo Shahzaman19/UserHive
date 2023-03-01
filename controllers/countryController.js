@@ -1,58 +1,56 @@
 const Country = require('../modal/country')
-const CC = require('currency-converter-lt')
+const {User} = require('../modal/user')
+const CC = require('currency-converter-lt');
+const  ObjectId  = require('mongodb').ObjectId;
  const apiKey = 'Bearer nQaCpAIABi2r3KBN4T8jhTeJ1O8uImLfHusOgG7c';
 
 
 exports.currencyConversion = async (req,res) => {
-    try {
-       const country = new Country({
-            name : req.body.name,
-            amountToConvert : req.body.amountToConvert,
-            convert_from : req.body.convert_from,
-            convert_to : req.body.convert_to,
-        })
-       
 
-        let currencyConverter = new CC (
-            {
-                name : req.body.name,
-                from : req.body.convert_from,
-                to : req.body.convert_to,
-                amount : req.body.amountToConvert
-            }
-        )
-
-       const result = await currencyConverter.convert()
-
-       await country.save() 
-            console.log(country.name,country.convert_to);
-
-            // if(country.name === "Pakistan"){
-            //     country.convert_to = "PKR"
-            // }else{
-            //     res.send("country not found")
-            // }
-
-       if (result) {
-        res.status(200).json({ country, result });
-    } else {
-        res.status(404).json({ message: "Not found" });
+const { id } = req.params;
+const { default_country } = req.body;
+try {
+  const user = await User.findOne({_id : id});
+    const country = await Country.findOne({ name: default_country });
+    if (default_country) {
+      const result = await User.updateOne({ _id: new ObjectId(id) }, { $set: {default_country: country._id} });
+      if(country._id == user.default_country){
+          user.currencies = country.currencies.name;
+          
+          await user.save(); 
+      }
+      res.send(result);
     }
+    else {
+      console.log("else part work");
+  
+     let currencyConverter = new CC (
+
+
+         {
+             from : req.body.convert_from,
+             to : req.body.convert_to,
+             amountToConvert : req.body.amountToConvert,
+         }
+     )
+
+    const result = await currencyConverter.convert()
+
+   res.json({country: country, result})
+   console.log(result);
+   }
+
+
+
+} catch (error) {
+  console.log(error.message);  
+}
+
     
-
-     
-       
-
-        
     
-   
-
-    } 
-
-    catch (error)
-    {
-        console.log(error.message);    
-    }
+    
+  
+    
     
 }
 

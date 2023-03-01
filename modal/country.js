@@ -27,16 +27,19 @@ const countrySchema = new mongoose.Schema({
     amountToConvert : {
         type : Number,
         maxlength : 255,
+        nonPersistedField: mongoose.Schema.Types.Mixed
     },
     convert_to : {
         type : String,
         maxlength : 255,
-        default : 'PKR'
+        // default : 'PKR'
+        nonPersistedField: mongoose.Schema.Types.Mixed
     },
     convert_from  : {
         type : String,
         maxlength : 255,
         // default : 'Pkr'
+        nonPersistedField: mongoose.Schema.Types.Mixed
     },
 });
 

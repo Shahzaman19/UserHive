@@ -1,52 +1,31 @@
 const bcrypt = require('bcrypt')
-const express = require('express')
 const { User, schema } = require('../modal/user')
-const Country = require('../modal/country')
+const Country = require('../modal/country');
+const ObjectId = require('mongodb').ObjectId;
 
-exports.userCountry = async (req, res) => {
+
+exports.userCountry = async (req, res) => { 
+const { id } = req.params;
+const { default_country } = req.body;
+
+try {
+    const user = await User.findOne({_id : id});
+    const country = await Country.findOne({ name: default_country });
+    if (!country) {
+        return res.status(400).json({ error: 'Country name not found' });
+    }
+    const result = await User.updateOne({ _id: new ObjectId(id) }, { $set: {default_country: country._id} });
+    if(country._id == user.default_country){
+        user.currencies = country.currencies.name;
+        await user.save(); 
+    }
+    res.send(result);
+} catch (error) {
+    console.log(error.message);
+}
+
+      
     
-    console.log("zamzamzamzmaz");
-    try {
-    // const {userId} = req.query;
-    // let user =  await User.findById({_id : userId})
-    // if(!user) return res.send('UserId not found')
-
-    // if(req.body.countryId){
-    //     user.country_Id = req.body.countryId
-    //     await user.save()
-    // }
-    // else{
-    //     user.country_Id = "Pakistan"
-    //     await user.save()
-    // }
-    // res.json(user)
-// -------------------------------------
-    const {userId} = req.query;
-    let user =  await User.findById({_id : userId})
-
-    if(!user) return res.send('UserId not found')
-
-    if(req.body.countryId){
-        user.country_Id = req.body.countryId
-        await user.save()
-    }
-    else{
-        const country = await Country.findOne({name: "Pakistan"})
-        if (country) {
-            user.country_Id = country._id
-            await user.save()
-        } else {
-            return res.send('Default country not found')
-        }
-    }
-    res.json(user)
-
-
-    }
-     catch (error)
-    {
-        console.log(error.message);
-    }
 }
 
 exports.getUser = async (req, res) => {
