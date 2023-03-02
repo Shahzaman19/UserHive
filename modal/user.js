@@ -1,6 +1,5 @@
 const Joi = require('joi')
 const jwt = require('jsonwebtoken');
-const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     name :{
@@ -34,12 +33,10 @@ const userSchema = new mongoose.Schema({
     },
     country_Id : {
         type : String,
-        // default : 'Pakistan'
     },
     countryId : {
         type : String,
         nonPersistedField: mongoose.Schema.Types.Mixed
-        // default : 'Pakistan'
     },
     default_country : {
         type : String
@@ -47,21 +44,12 @@ const userSchema = new mongoose.Schema({
     currencies : {
         type : String
     },
-    // default_country: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Country'
-    //   }
+   
 
 });
 
-// userSchema.virtual('default_currency').get(async function() {
-//     const country = await mongoose.model('Country').findById(this.default_country);
-//     return country.currencies[0];
-//   });
-
-
 userSchema.methods.generateAuthToken = function(){
-    const token = jwt.sign({ userId: this._id , userRole : this.role}, 'myPrivateKey');
+    const token = jwt.sign({ userId: this._id , userRole : this.role}, process.env.PRIVATE_KEY);
     return token;
 }
 

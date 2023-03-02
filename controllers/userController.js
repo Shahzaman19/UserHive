@@ -1,32 +1,5 @@
 const bcrypt = require('bcrypt')
 const { User, schema } = require('../modal/user')
-const Country = require('../modal/country');
-const ObjectId = require('mongodb').ObjectId;
-
-
-exports.userCountry = async (req, res) => { 
-const { id } = req.params;
-const { default_country } = req.body;
-
-try {
-    const user = await User.findOne({_id : id});
-    const country = await Country.findOne({ name: default_country });
-    if (!country) {
-        return res.status(400).json({ error: 'Country name not found' });
-    }
-    const result = await User.updateOne({ _id: new ObjectId(id) }, { $set: {default_country: country._id} });
-    if(country._id == user.default_country){
-        user.currencies = country.currencies.name;
-        await user.save(); 
-    }
-    res.send(result);
-} catch (error) {
-    console.log(error.message);
-}
-
-      
-    
-}
 
 exports.getUser = async (req, res) => {
     const user = await User.find()
@@ -55,6 +28,7 @@ exports.createUser = async (req, res) => {
         await user.save()
 
         const token = user.generateAuthToken();
+        // return res.json({token});
         res.header('x-auth-token', token).json({
 
             user: {
